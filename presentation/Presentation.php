@@ -44,6 +44,7 @@ function launchPresentation( $paramstring, $params = array() ){
 	
 	$slideNumber = 0;
 	$notoc = "";
+	$delimiter = ",";
 	
 	if(trim($paramstring) == "") 
 		return "<br><font color=red><b>Please define at least one page to use this extention.</b></font>\n<hr>";
@@ -55,9 +56,14 @@ function launchPresentation( $paramstring, $params = array() ){
 	//disable toc per tag params
 	if(isset($params['notoc'])) $notoc = "__NOTOC__";
 	
+	if(isset($params['delimiter'])){
+		$delimiter = $params['delimiter'];
+		//$delimiter = str_replace("\n",chr(13),$delimiter);
+	}
+	
 	// clean up the string; replace whitespace with a single space
 	$paramstring = preg_replace ('@\s+@', " ",$paramstring); 
-	$slides = split(",", trim($paramstring));
+	$slides = split($delimiter, trim($paramstring));
 	
 	// remove any blank array values
 	foreach($slides as $slide){
